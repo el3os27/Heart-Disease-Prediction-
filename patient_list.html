@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Monitoring List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        h1 {
+            color: #e74c3c;
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .patient-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        .patient-table th {
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .patient-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        
+        .patient-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-high {
+            background-color: #fdecea;
+            color: #e74c3c;
+        }
+        
+        .badge-medium {
+            background-color: #fff8e6;
+            color: #f39c12;
+        }
+        
+        .badge-low {
+            background-color: #e8f5e9;
+            color: #27ae60;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+            border: 1px solid #3498db;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .btn-secondary {
+            background-color: #7f8c8d;
+            color: white;
+            border: 1px solid #7f8c8d;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #6c7a7d;
+            border-color: #6c7a7d;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .search-filter {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .search-box, .filter-select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        @media (max-width: 768px) {
+            .patient-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-heartbeat"></i> Patients Monitoring Dashboard</h1>
+            <div>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </div>
+        </div>
+        
+        <div class="search-filter">
+            <input type="text" class="search-box" placeholder="Search patients...">
+            <select class="filter-select">
+                <option>All Status</option>
+                <option>High Risk (≥0.5)</option>
+                <option>Medium Risk (0.3-0.5)</option>
+                <option>Low Risk (<0.3)</option>
+            </select>
+        </div>
+        
+        <table class="patient-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Patient Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Risk Level</th>
+                    <th>Probability</th>
+                    <th>Diagnosis</th>
+                    <th>Last Updated</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient[0] }}</td>
+                    <td><strong>{{ patient[1] }}</strong></td>
+                    <td>{{ patient[2] }}</td>
+                    <td>{{ patient[3] }}</td>
+                    <td>
+                        {% if patient[4] >= 0.5 %}
+                            <span class="badge badge-high">
+                                <i class="fas fa-exclamation-triangle"></i> High Risk
+                            </span>
+                        {% elif patient[4] >= 0.3 %}
+                            <span class="badge badge-medium">
+                                <i class="fas fa-clipboard-check"></i> Medium Risk
+                            </span>
+                        {% else %}
+                            <span class="badge badge-low">
+                                <i class="fas fa-check-circle"></i> Low Risk
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td>{{ "%.2f"|format(patient[4]) }}</td>
+                    <td>{{ patient[5] }}</td>
+                    <td>{{ patient[7].split()[0] if patient[7] else 'N/A' }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('patient_details', patient_id=patient[0]) }}" class="btn btn-primary">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Simple search functionality
+        document.querySelector('.search-box').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.patient-table tbody tr');
+            
+            rows.forEach(row => {
+                const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                row.style.display = name.includes(searchTerm) ? '' : 'none';
+            });
+        });
+        
+        // Filter functionality
+        document.querySelector('.filter-select').addEventListener('change', function(e) {
+            const filterValue = e.target.value;
+            const rows = document.querySelectorAll('.patient-table tbody tr');
+            
+            rows.forEach(row => {
+                const riskLevel = row.querySelector('td:nth-child(5) span').textContent;
+                let shouldShow = true;
+                
+                if (filterValue === 'High Risk (≥0.5)') {
+                    shouldShow = riskLevel.includes('High Risk');
+                } else if (filterValue === 'Medium Risk (0.3-0.5)') {
+                    shouldShow = riskLevel.includes('Medium Risk');
+                } else if (filterValue === 'Low Risk (<0.3)') {
+                    shouldShow = riskLevel.includes('Low Risk');
+                }
+                
+                row.style.display = shouldShow ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

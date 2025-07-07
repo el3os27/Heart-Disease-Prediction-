@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        h1 {
+            color: #e74c3c;
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .patient-id {
+            color: #7f8c8d;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .info-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-top: 3px solid #e74c3c;
+        }
+        
+        .info-card h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-item {
+            margin-bottom: 12px;
+            display: flex;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 120px;
+        }
+        
+        .info-value {
+            flex: 1;
+        }
+        
+        .probability-display {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .probability-high {
+            background-color: #fdecea;
+            color: #e74c3c;
+        }
+        
+        .probability-medium {
+            background-color: #fff8e6;
+            color: #f39c12;
+        }
+        
+        .probability-low {
+            background-color: #e8f5e9;
+            color: #27ae60;
+        }
+        
+        .treatments {
+            margin-top: 40px;
+        }
+        
+        .treatment-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-left: 3px solid #3498db;
+        }
+        
+        .treatment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .treatment-type {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        
+        .treatment-date {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        .treatment-desc {
+            color: #34495e;
+            line-height: 1.6;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+            border: 1px solid #3498db;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .btn-secondary {
+            background-color: #7f8c8d;
+            color: white;
+            border: 1px solid #7f8c8d;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #6c7a7d;
+            border-color: #6c7a7d;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+            border: 1px solid #e74c3c;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+            border-color: #c0392b;
+        }
+        
+        .no-data {
+            color: #7f8c8d;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1><i class="fas fa-user-injured"></i> {{ patient.name }}</h1>
+                <div class="patient-id">Patient ID: {{ patient.id }}</div>
+            </div>
+            <div>
+                <a href="{{ url_for('patient_list') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h2><i class="fas fa-id-card"></i> Personal Information</h2>
+                <div class="info-item">
+                    <span class="info-label">National ID:</span>
+                    <span class="info-value">{{ patient.national_id }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Nationality:</span>
+                    <span class="info-value">{{ patient.nationality }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Age:</span>
+                    <span class="info-value">{{ patient.age }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Gender:</span>
+                    <span class="info-value">{{ patient.gender }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Mobile:</span>
+                    <span class="info-value">{{ patient.mobile_number }}</span>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <h2><i class="fas fa-heartbeat"></i> Health Information</h2>
+                <div class="info-item">
+                    <span class="info-label">Chronic Diseases:</span>
+                    <span class="info-value">{{ patient.chronic_diseases if patient.chronic_diseases else 'None' }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Cholesterol:</span>
+                    <span class="info-value">{{ patient.cholesterol }} mg/dL</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Blood Pressure:</span>
+                    <span class="info-value">{{ patient.blood_pressure }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Weight/Height:</span>
+                    <span class="info-value">{{ patient.weight }} kg / {{ patient.height }} cm</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Smoking:</span>
+                    <span class="info-value">{{ patient.smoking_status }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Exercise:</span>
+                    <span class="info-value">{{ patient.exercise_frequency }}</span>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <h2><i class="fas fa-diagnoses"></i> Diagnosis Information</h2>
+                <div class="info-item">
+                    <span class="info-label">Diagnosis:</span>
+                    <span class="info-value">{{ patient.diagnosis }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Disease Type:</span>
+                    <span class="info-value">{{ patient.disease_type if patient.disease_type else 'N/A' }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Risk Probability:</span>
+                    <span class="info-value">
+                        <div class="probability-display 
+                            {% if patient.probability >= 0.5 %}probability-high
+                            {% elif patient.probability >= 0.3 %}probability-medium
+                            {% else %}probability-low
+                            {% endif %}">
+                            {{ "%.2f"|format(patient.probability) }}
+                        </div>
+                    </span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Last Updated:</span>
+                    <span class="info-value">{{ patient.timestamp }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="treatments">
+            <h2><i class="fas fa-prescription-bottle-alt"></i> Treatment History</h2>
+            
+            {% if treatments %}
+                {% for treatment in treatments %}
+                <div class="treatment-card">
+                    <div class="treatment-header">
+                        <div class="treatment-type">{{ treatment[2] }}</div>
+                        <div class="treatment-date">{{ treatment[4] }}</div>
+                    </div>
+                    <div class="treatment-desc">{{ treatment[3] }}</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-data">
+                    No treatment history found for this patient.
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="btn-group">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+            <a href="#" class="btn btn-primary">
+                <i class="fas fa-edit"></i> Edit Patient
+            </a>
+            <a href="#" class="btn btn-danger">
+                <i class="fas fa-file-pdf"></i> Generate PDF Report
+            </a>
+        </div>
+    </div>
+</body>
+</html>

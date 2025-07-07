@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Clinic</title>
+    <style>
+:root {
+    --primary-color: #4a6fa5;
+    --secondary-color: #166088;
+    --accent-color: #4fc3f7;
+    --dark-color:rgb(70, 119, 171);
+    --light-color: #f5f7fa;
+    --text-color: #333;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --blue-frame: #4a89dc;
+    --dark-blue: #1a237e;
+    --welcome-blue:rgb(39, 89, 162);
+}
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('https://cdn.arabsstock.com/uploads/images/174182/the-development-of-technology-in-thumbnail-174182.webp') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+
+        
+        .hospital-header {
+    align-self: flex-start;
+    margin: 20px 0 0 30px;
+}
+
+.hospital-title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+.opticare {
+    color: white;
+}
+
+.hospital {
+    color: var(--accent-color);
+}
+
+.welcome-section {
+    text-align: center;
+    margin: 20px 0 30px;
+    padding: 20px;
+    position: relative;
+}
+
+.welcome-title {
+    font-size: 2.5rem;
+    color: var(--welcome-blue);
+    margin: 0;
+    padding: 15px 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: inline-block;
+    border: 3px solid var(--welcome-blue); /* إضافة إطار أزرق */
+    border-radius: 10px; /* زوايا مدورة */
+    background-color: rgba(255, 255, 255, 0.9); /* خلفية شبه شفافة */
+    box-shadow: 0 4px 15px rgba(39, 89, 162, 0.3); /* ظل للإطار */
+}
+
+.welcome-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: rgba(39, 89, 162, 0.3);
+    border-radius: 8px;
+    border: 2px solid var(--welcome-blue);
+}
+
+.welcome-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 25px;
+    font-weight: 300;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    margin-bottom: 40px;
+    border-top: 5px solid var(--accent-color);
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid rgba(82, 65, 235, 0.3);
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(88, 67, 226, 0.6);
+}
+
+h1 {
+    text-align: center;
+    color: var(--dark-blue);
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--dark-color);
+    text-align: left;
+}
+
+input, select, textarea {
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border: 1px solid #e1e5eb;
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+    background: #fff;
+}
+
+button {
+    background-color: #1F4690;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+    transform: translateY(-2px);
+}
+
+::placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
+
+.medical-icon {
+    color: var(--accent-color);
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.patient-info-title {
+    color: var(--dark-blue);
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hospital Header -->
+    <div class="hospital-header">
+        <h1 class="hospital-title">
+            <span class="opticare">opticare</span><span class="hospital">hospital</span>
+        </h1>
+    </div>
+    
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <h1 class="welcome-title">Welcome to Heart Disease Clinic</h1>
+        <p class="welcome-subtitle">heart diseas Detection & treatment</p>
+    </div>
+    
+    <!-- Main Form Container -->
+    <div class="container">
+        <h1>Personal information</h1>
+        <form method="POST" action="/process" enctype="multipart/form-data">
+            
+            <label for="name"><span class="medical-icon">👤</span>Full Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter full name" required>
+
+            <label for="national_id"><span class="medical-icon">🆔</span>National ID:</label>
+            <input type="text" id="national_id" name="national_id" placeholder="Enter national ID" required>
+
+            <label for="nationality"><span class="medical-icon">🌎</span>Nationality:</label>
+            <input type="text" id="nationality" name="nationality" placeholder="Enter nationality" required>
+
+            <label for="age"><span class="medical-icon">🎂</span>Age:</label>
+            <input type="number" id="age" name="age" placeholder="Enter age" required>
+
+            <label for="mobile_number"><span class="medical-icon">📱</span>Mobile Number:</label>
+            <input type="text" id="mobile_number" name="mobile_number" placeholder="Enter mobile number" required>
+
+            <label for="gender"><span class="medical-icon">🚻</span>Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="chronic_diseases"><span class="medical-icon">💊</span>Chronic Diseases:</label>
+            <input type="text" id="chronic_diseases" name="chronic_diseases" placeholder="e.g. Diabetes, Hypertension">
+
+            <label for="cholesterol"><span class="medical-icon">🩸</span>Cholesterol (mg/dL):</label>
+            <input type="number" id="cholesterol" name="cholesterol" placeholder="Enter cholesterol level" required>
+
+            <label for="blood_pressure"><span class="medical-icon">🩺</span>Blood Pressure (mmHg):</label>
+            <input type="text" id="blood_pressure" name="blood_pressure" placeholder="e.g. 120/80" required>
+
+            <label for="weight"><span class="medical-icon">⚖️</span>Weight (kg):</label>
+            <input type="number" id="weight" name="weight" placeholder="Enter weight in kg" required step="0.1">
+
+            <label for="height"><span class="medical-icon">📏</span>Height (cm):</label>
+            <input type="number" id="height" name="height" placeholder="Enter height in cm" required>
+
+            <label for="smoking_status"><span class="medical-icon">🚬</span>Smoking Status:</label>
+            <select id="smoking_status" name="smoking_status" required>
+                <option value="" disabled selected>Select smoking status</option>
+                <option value="Never">Never smoked</option>
+                <option value="Former">Former smoker</option>
+                <option value="Current">Current smoker</option>
+            </select>
+
+            <label for="exercise_frequency"><span class="medical-icon">🏃</span>Exercise Frequency:</label>
+            <select id="exercise_frequency" name="exercise_frequency" required>
+                <option value="" disabled selected>Select exercise frequency</option>
+                <option value="Daily">Daily</option>
+                <option value="Weekly">3-5 times/week</option>
+                <option value="Occasional">1-2 times/week</option>
+                <option value="Rarely">Less than once/week</option>
+                <option value="Never">Never</option>
+            </select>
+
+            <label for="image"><span class="medical-icon">📷</span>Upload Medical Image (Echo/CT/MRI):</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+
+            <div class="monitoring-note">
+                <strong>Note:</strong> Patients with a heart disease probability ≥ 0.30 will be 
+                automatically added to our monitoring system for follow-up care.
+            </div>
+
+            <button type="submit">Analyze Cardiac Scan</button>
+        </form>
+    </div>
+</body>
+</html>
